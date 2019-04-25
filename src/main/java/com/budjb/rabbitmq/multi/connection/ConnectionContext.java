@@ -21,6 +21,7 @@ import com.budjb.rabbitmq.multi.config.ConnectionConfiguration;
 import com.budjb.rabbitmq.multi.config.ConnectionParameters;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +49,11 @@ public class ConnectionContext {
     private final ConnectionProvider connectionProvider;
 
     /**
+     * Micrometer meter registry.
+     */
+    private final MeterRegistry meterRegistry;
+
+    /**
      * Connection to RabbitMQ.
      */
     private Connection connection;
@@ -57,11 +63,19 @@ public class ConnectionContext {
      *
      * @param name                    Name of the connection.
      * @param connectionConfiguration Connection configuration.
+     * @param connectionProvider      Connection provider.
+     * @param meterRegistry           Micrometer meter registry.
      */
-    public ConnectionContext(String name, ConnectionConfiguration connectionConfiguration, ConnectionProvider connectionProvider) {
+    public ConnectionContext(
+        String name,
+        ConnectionConfiguration connectionConfiguration,
+        ConnectionProvider connectionProvider,
+        MeterRegistry meterRegistry
+    ) {
         this.name = name;
         this.connectionConfiguration = connectionConfiguration;
         this.connectionProvider = connectionProvider;
+        this.meterRegistry = meterRegistry;
     }
 
     /**
@@ -93,7 +107,7 @@ public class ConnectionContext {
         }
 
         try {
-            this.connection = connectionProvider.createConnection(connectionConfiguration);
+            this.connection = connectionProvider.createConnection(connectionConfiguration, meterRegistry);
             log.info("Opened connection to RabbitMQ server " + getName() + " (" + connectionParameters + ")");
         }
         catch (ConnectionException e) {

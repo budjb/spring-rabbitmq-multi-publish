@@ -18,6 +18,8 @@ package com.budjb.rabbitmq.multi.connection;
 
 import com.budjb.rabbitmq.multi.config.ConnectionConfiguration;
 import com.rabbitmq.client.Connection;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.lang.Nullable;
 
 /**
  * A class used to provide dependency injection for the creation of RabbitMQ
@@ -28,7 +30,8 @@ public interface ConnectionProvider {
      * Creates new connection to a RabbitMQ broker.
      *
      * @param connectionConfiguration Connection configuration.
+     * @param meterRegistry           Micrometer meter registry.
      * @return A new connection.
      */
-    Connection createConnection(ConnectionConfiguration connectionConfiguration) throws ConnectionException;
+    Connection createConnection(ConnectionConfiguration connectionConfiguration, @Nullable MeterRegistry meterRegistry) throws ConnectionException;
 }

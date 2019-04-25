@@ -31,7 +31,7 @@ class ConnectionContextSpec extends Specification {
         ConnectionConfiguration configuration = new ConnectionConfiguration()
 
         when:
-        ConnectionContext context = new ConnectionContext('foo', configuration, null)
+        ConnectionContext context = new ConnectionContext('foo', configuration, null, null)
 
         then:
         context.name == 'foo'
@@ -49,7 +49,7 @@ class ConnectionContextSpec extends Specification {
         ConnectionConfiguration configuration = new ConnectionConfiguration()
         configuration.uri = new URI('amqps://localhost/foo')
 
-        ConnectionContext context = new ConnectionContext('foo', configuration, provider)
+        ConnectionContext context = new ConnectionContext('foo', configuration, provider, null)
 
         when:
         context.start()
@@ -77,7 +77,7 @@ class ConnectionContextSpec extends Specification {
         ConnectionConfiguration configuration = new ConnectionConfiguration()
         configuration.uri = new URI('amqps://localhost/foo')
 
-        ConnectionContext context = new ConnectionContext('foo', configuration, provider)
+        ConnectionContext context = new ConnectionContext('foo', configuration, provider, null)
         context.start()
 
         connection.isOpen() >> true
@@ -100,7 +100,7 @@ class ConnectionContextSpec extends Specification {
         ConnectionConfiguration configuration = new ConnectionConfiguration()
         configuration.uri = new URI('amqps://localhost/foo')
 
-        ConnectionContext context = new ConnectionContext('foo', configuration, provider)
+        ConnectionContext context = new ConnectionContext('foo', configuration, provider, null)
         context.start()
 
         when:

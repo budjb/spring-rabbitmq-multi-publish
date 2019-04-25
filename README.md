@@ -31,6 +31,10 @@ is `my-connection`.
 
 ### 0.1.0
 
+* Change metrics to use micrometer.
+
+### 0.1.0
+
 * Initial release with tests.
 * Added a `ConnectionProvider` to abstract the functionality of building a RabbitMQ
   connection.

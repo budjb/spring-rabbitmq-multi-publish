@@ -18,10 +18,11 @@ package com.budjb.rabbitmq.multi.connection;
 
 import com.budjb.rabbitmq.multi.config.ConnectionConfiguration;
 import com.budjb.rabbitmq.multi.config.ConnectionParameters;
-import com.codahale.metrics.MetricRegistry;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.impl.StandardMetricsCollector;
+import com.rabbitmq.client.impl.MicrometerMetricsCollector;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.lang.Nullable;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +40,7 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider {
      * {@inheritDoc}
      */
     @Override
-    public Connection createConnection(ConnectionConfiguration connectionConfiguration) throws ConnectionException {
+    public Connection createConnection(ConnectionConfiguration connectionConfiguration, @Nullable MeterRegistry meterRegistry) throws ConnectionException {
         try {
             ConnectionParameters connectionParameters = connectionConfiguration.getConnectionParameters();
 
@@ -65,10 +66,8 @@ public abstract class AbstractConnectionProvider implements ConnectionProvider {
                 }});
             }
 
-            if (connectionConfiguration.isEnableMetrics()) {
-                MetricRegistry metricRegistry = new MetricRegistry();
-                StandardMetricsCollector metrics = new StandardMetricsCollector(metricRegistry);
-                factory.setMetricsCollector(metrics);
+            if (meterRegistry != null) {
+                factory.setMetricsCollector(new MicrometerMetricsCollector(meterRegistry));
             }
 
             ExecutorService executorService = connectionConfiguration.getThreadPoolSize() > 0 ?

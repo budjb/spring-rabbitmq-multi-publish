@@ -28,7 +28,6 @@ class ConnectionConfigurationSpec extends Specification {
         configuration.uri == null
         !configuration.isDefault()
         configuration.isAutomaticReconnect()
-        configuration.isEnableMetrics()
         configuration.getThreadPoolSize() == 0
         configuration.getClientProperties().isEmpty()
         configuration.getRequestedHeartbeat() == ConnectionFactory.DEFAULT_HEARTBEAT
@@ -42,7 +41,6 @@ class ConnectionConfigurationSpec extends Specification {
         configuration.uri = uri
         configuration.default = true
         configuration.automaticReconnect = false
-        configuration.enableMetrics = false
         configuration.threadPoolSize = 1
         configuration.clientProperties = ['foo': 'bar']
         configuration.requestedHeartbeat = 1234
@@ -51,7 +49,6 @@ class ConnectionConfigurationSpec extends Specification {
         configuration.uri.is uri
         configuration.isDefault()
         !configuration.isAutomaticReconnect()
-        !configuration.isEnableMetrics()
         configuration.getThreadPoolSize() == 1
         configuration.getClientProperties() == ['foo': 'bar']
         configuration.getRequestedHeartbeat() == 1234

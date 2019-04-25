@@ -44,11 +44,6 @@ public class ConnectionConfiguration {
     private boolean automaticReconnect = true;
 
     /**
-     * Whether to enable metrics.
-     */
-    private boolean enableMetrics = true;
-
-    /**
      * The overall thread pool size to use for consumers. {@code 0} means unlimited.
      * <p>
      * If a limit is set that is lower than the sum of all consumer threads on the connection,
@@ -108,24 +103,6 @@ public class ConnectionConfiguration {
      */
     public void setRequestedHeartbeat(int requestedHeartbeat) {
         this.requestedHeartbeat = requestedHeartbeat;
-    }
-
-    /**
-     * Returns whether to enable metrics.
-     *
-     * @return Whether to enable metrics.
-     */
-    public boolean isEnableMetrics() {
-        return enableMetrics;
-    }
-
-    /**
-     * Sets whether to enable metrics.
-     *
-     * @param enableMetrics Whether to enable metrics.
-     */
-    public void setEnableMetrics(boolean enableMetrics) {
-        this.enableMetrics = enableMetrics;
     }
 
     /**

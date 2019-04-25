@@ -22,7 +22,7 @@ plugins {
 }
 
 group = 'com.budjb'
-version = '0.1.0'
+version = '0.1.1'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy-json'
     implementation 'org.slf4j:slf4j-api'
     implementation 'com.rabbitmq:amqp-client'
-    implementation 'io.dropwizard.metrics:metrics-core'
+    implementation 'io.micrometer:micrometer-core'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 

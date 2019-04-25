@@ -18,11 +18,12 @@ package com.budjb.rabbitmq.multi;
 
 import com.budjb.rabbitmq.multi.config.RabbitConfigurationProperties;
 import com.budjb.rabbitmq.multi.connection.ConnectionContext;
-import com.budjb.rabbitmq.multi.connection.ConnectionProvider;
 import com.budjb.rabbitmq.multi.connection.ConnectionManager;
+import com.budjb.rabbitmq.multi.connection.ConnectionProvider;
 import com.budjb.rabbitmq.multi.connection.DefaultConnectionProvider;
 import com.budjb.rabbitmq.multi.converter.*;
 import com.budjb.rabbitmq.multi.publisher.RabbitMessagePublisher;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -39,9 +40,9 @@ import java.util.stream.Collectors;
 public class RabbitAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
-    public ConnectionManager connectionManager(RabbitConfigurationProperties rabbitConfigurationProperties, ConnectionProvider connectionProvider) {
+    public ConnectionManager connectionManager(RabbitConfigurationProperties rabbitConfigurationProperties, ConnectionProvider connectionProvider, Optional<MeterRegistry> meterRegistry) {
         return new ConnectionManager(rabbitConfigurationProperties, rabbitConfigurationProperties.getConnections().entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, e -> new ConnectionContext(e.getKey(), e.getValue(), connectionProvider))));
+            .collect(Collectors.toMap(Map.Entry::getKey, e -> new ConnectionContext(e.getKey(), e.getValue(), connectionProvider, meterRegistry.orElse(null)))));
     }
 
     @Bean
