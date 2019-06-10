@@ -29,7 +29,11 @@ is `my-connection`.
 
 ## Changelog
 
-### 0.1.0
+### 0.1.2
+
+* Fix an issue where an RPC call returns the request body instead of the response body.
+
+### 0.1.1
 
 * Change metrics to use micrometer.
 

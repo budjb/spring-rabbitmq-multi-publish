@@ -169,7 +169,7 @@ public class RabbitMessagePublisher {
             DefaultConsumer consumer = new DefaultConsumer(channel) {
                 @Override
                 public void handleDelivery(String replyConsumerTag, Envelope replyEnvelope, BasicProperties replyProperties, byte[] replyBody) {
-                    MessageContext context = new MessageContext(replyProperties, body);
+                    MessageContext context = new MessageContext(replyProperties, replyBody);
 
                     try {
                         replyHandOff.put(context);
