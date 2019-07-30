@@ -29,6 +29,11 @@ is `my-connection`.
 
 ## Changelog
 
+### 0.1.3
+
+* Fixed a bug where getting a default connection context simply returned the first
+  configured connection instead of looking for the first _default_ connection.
+
 ### 0.1.2
 
 * Fix an issue where an RPC call returns the request body instead of the response body.

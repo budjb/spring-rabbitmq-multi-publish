@@ -16,8 +16,36 @@
 
 package com.budjb.rabbitmq.multi.connection
 
+import com.budjb.rabbitmq.multi.config.RabbitConfigurationProperties
 import spock.lang.Specification
 
 class ConnectionManagerSpec extends Specification {
+    def 'When a default connection is requested and a connection is configured as default, it is returned'() {
+        setup:
+        ConnectionContext c1 = Mock(ConnectionContext)
+        ConnectionContext c2 = Mock(ConnectionContext)
+        ConnectionContext c3 = Mock(ConnectionContext)
 
+        c2.isDefault() >> true
+
+        RabbitConfigurationProperties rabbitConfigurationProperties = new RabbitConfigurationProperties()
+        ConnectionManager connectionManager = new ConnectionManager(rabbitConfigurationProperties, [c1: c1, c2: c2, c3: c3])
+
+        when:
+        ConnectionContext result = connectionManager.getContext()
+
+        then:
+        result.is c2
+    }
+
+    def 'When a default connection is requested and none are configured, an exception is throw'() {
+        RabbitConfigurationProperties rabbitConfigurationProperties = new RabbitConfigurationProperties()
+        ConnectionManager connectionManager = new ConnectionManager(rabbitConfigurationProperties, [:])
+
+        when:
+        connectionManager.getContext()
+
+        then:
+        thrown IllegalArgumentException
+    }
 }

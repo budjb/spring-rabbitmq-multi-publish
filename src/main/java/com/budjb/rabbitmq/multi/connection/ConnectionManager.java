@@ -87,7 +87,7 @@ public class ConnectionManager {
      * @return The default connection context.
      */
     public ConnectionContext getContext() {
-        return connections.values().stream().findFirst()
+        return connections.values().stream().filter(ConnectionContext::isDefault).findFirst()
             .orElseThrow(() -> new IllegalArgumentException("no default connection was found"));
     }
 
