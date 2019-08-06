@@ -154,7 +154,7 @@ public class MessageConverterManager {
             return messageConverter.convert(input);
         }
         catch (Throwable e) {
-            log.error("unhandled exception caught from message converter ${messageConverter.class.simpleName}", e);
+            log.error("unhandled exception caught from message converter " + messageConverter.getClass().getName(), e);
             return null;
         }
     }
@@ -167,7 +167,7 @@ public class MessageConverterManager {
             return messageConverter.convert(input);
         }
         catch (Throwable e) {
-            log.error("unhandled exception caught from message converter ${messageConverter.class.simpleName}", e);
+            log.error("unhandled exception caught from message converter " + messageConverter.getClass().getName(), e);
             return null;
         }
     }

@@ -29,6 +29,10 @@ is `my-connection`.
 
 ## Changelog
 
+### 0.1.4
+
+* Fix log line that previously used Groovy string interpolation.
+
 ### 0.1.3
 
 * Fixed a bug where getting a default connection context simply returned the first
